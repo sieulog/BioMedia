@@ -12,6 +12,7 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'homeUrl' => '/admin',
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
@@ -29,12 +30,30 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'request' => [
+            'baseUrl' => '/admin',
+        ],
         'urlManager' => [
           'enablePrettyUrl' => true,
           'showScriptName' => false,
           'rules' => [
             '/' => 'site/index'
           ],
+        ],
+    ],
+    'controllerMap' => [
+        'elfinder' => [
+            'class' => 'mihaildev\elfinder\Controller',
+            'access' => ['@'],
+            'disabledCommands' => ['netmount'],
+            'roots' => [
+                [
+                    'baseUrl' => '',
+                    'basePath' => '@frontend/web',
+                    'path' => 'uploads',
+                    'name' => 'Uploads'
+                ],
+            ],
         ],
     ],
     'params' => $params,

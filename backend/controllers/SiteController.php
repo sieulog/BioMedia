@@ -1,15 +1,17 @@
 <?php
 namespace backend\controllers;
 
+use common\onecms\UserHelper;
 use Yii;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
-use yii\web\ErrorAction;
+use yii\web\Controller;
+
 /**
  * Site controller
  */
-class SiteController extends BackendController
+class SiteController extends Controller
 {
     /**
      * @inheritdoc
@@ -33,8 +35,8 @@ class SiteController extends BackendController
                         'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['@'],
-                        'matchCallback' => function ($rule, $action) {
-                            return $this->isAdmin();
+                        'matchCallback' => function () {
+                            return UserHelper::isAdmin();
                         }
                     ],
                 ],

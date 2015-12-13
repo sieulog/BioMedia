@@ -17,7 +17,7 @@ class m151209_074643_page_module extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull()->unique(),
             'slug' => $this->string(),
-            'content' => $this->string(),
+            'content' => $this->text(),
 
             'meta_title' => $this->string(70),
             'meta_description' => $this->string(160),

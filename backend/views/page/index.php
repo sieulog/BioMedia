@@ -10,35 +10,33 @@ use yii\grid\GridView;
 $this->title = Yii::t('backend', 'Pages');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="page-index">
-
+<div class="box page-index">
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
+    <div class="box-header">
         <?= Html::a(Yii::t('backend', 'Create Page'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    </div>
+    <div class="box-body">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+//            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                'id',
+                'title',
+                'slug',
+//                'content',
+//                'meta_title',
+                // 'meta_description',
+                // 'meta_keywords',
+                // 'status',
+                // 'created_by',
+                // 'updated_by',
+                // 'created_at',
+                // 'updated_at',
 
-            'id',
-            'title',
-            'slug',
-            'content',
-            'meta_title',
-            // 'meta_description',
-            // 'meta_keywords',
-            // 'status',
-            // 'created_by',
-            // 'updated_by',
-            // 'created_at',
-            // 'updated_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    </div>
 </div>

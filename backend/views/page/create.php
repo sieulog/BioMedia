@@ -10,12 +10,8 @@ $this->title = Yii::t('backend', 'Create Page');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Pages'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="page-create">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
+<div class="box page-create">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
 </div>

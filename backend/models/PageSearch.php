@@ -18,7 +18,8 @@ class PageSearch extends Page
     public function rules()
     {
         return [
-            [['id', 'title', 'slug', 'content', 'meta_title', 'meta_description', 'meta_keywords', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'safe'],
+            [['id', 'status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
+            [['title', 'slug', 'content', 'meta_title', 'meta_description', 'meta_keywords'], 'safe'],
         ];
     }
 
@@ -54,18 +55,21 @@ class PageSearch extends Page
             return $dataProvider;
         }
 
-        $query->andFilterWhere(['like', 'id', $this->id])
-            ->andFilterWhere(['like', 'title', $this->title])
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'status' => $this->status,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ]);
+
+        $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'slug', $this->slug])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'meta_title', $this->meta_title])
             ->andFilterWhere(['like', 'meta_description', $this->meta_description])
-            ->andFilterWhere(['like', 'meta_keywords', $this->meta_keywords])
-            ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'created_by', $this->created_by])
-            ->andFilterWhere(['like', 'updated_by', $this->updated_by])
-            ->andFilterWhere(['like', 'created_at', $this->created_at])
-            ->andFilterWhere(['like', 'updated_at', $this->updated_at]);
+            ->andFilterWhere(['like', 'meta_keywords', $this->meta_keywords]);
 
         return $dataProvider;
     }

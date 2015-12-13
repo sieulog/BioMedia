@@ -5,7 +5,6 @@ namespace common\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\behaviors\BlameableBehavior;
-use common\onecms\SlugHelper;
 
 /**
  * This is the model class for table "page".
@@ -46,12 +45,16 @@ class Page extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            [
-                'class' => SlugHelper::className(),
-                'attribute' => 'slug',
+            'slug' => [
+                'class' => 'Zelenin\yii\behaviors\Slug',
                 'slugAttribute' => 'slug',
-                'immutable' => true,
+                'attribute' => ['title', 'slug'],
+                // optional params
                 'ensureUnique' => true,
+                'replacement' => '-',
+                'lowercase' => true,
+                'immutable' => true,
+                'transliterateOptions' => 'Russian-Latin/BGN; Any-Latin; Latin-ASCII; NFD; [:Nonspacing Mark:] Remove; NFC;'
             ],
             [
                 'class' => TimestampBehavior::className(),
@@ -61,15 +64,17 @@ class Page extends \yii\db\ActiveRecord
             ],
         ];
     }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['title', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'required'],
+            [['title'], 'required'],
             [['status', 'created_by', 'updated_by', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'slug', 'content', 'meta_keywords'], 'string', 'max' => 255],
+            [['title', 'slug', 'meta_keywords'], 'string', 'max' => 255],
+            [['content'], 'string'],
             [['meta_title'], 'string', 'max' => 70],
             [['meta_description'], 'string', 'max' => 160],
             [['title'], 'unique']

@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * PageController implements the CRUD actions for Page model.
  */
-class PageController extends BackendController
+class PageController extends Controller
 {
     public function behaviors()
     {
@@ -62,8 +62,10 @@ class PageController extends BackendController
     {
         $model = new Page();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()):
+                return $this->redirect(['index']);
+            endif;
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -81,8 +83,10 @@ class PageController extends BackendController
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->save()):
+                return $this->redirect(['index']);
+            endif;
         } else {
             return $this->render('update', [
                 'model' => $model,
